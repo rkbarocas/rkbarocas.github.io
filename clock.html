@@ -3,7 +3,7 @@
     <head>
         <title>Cooperative Clock</title>
         <style>
-            .secondHand {
+            #secondHand {
                 height: 200px;
                 width: 10px;
                 transform: rotate(0deg);
@@ -30,7 +30,16 @@
     <body>
         <div class="frame">
             <div class="number">12</div>
-            <div class="secondHand"></div>
+            <div id="secondHand"></div>
         </div>
     </body>
+    <script>
+    	const secondHand = document.getElementById("secondHand");
+        var rotate = 0;
+    	function rotateSecond() {
+        	secondHand.style.transform="rotate(" + rotate + "deg)";
+            rotate = (rotate + 6) % 360;
+        }
+        setInterval(rotateSecond, 1000);
+    </script>
 </html>
