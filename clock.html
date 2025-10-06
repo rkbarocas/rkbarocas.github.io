@@ -1,30 +1,36 @@
+<!DOCTYPE html>
 <html>
     <head>
         <title>Cooperative Clock</title>
         <style>
-            #secondHand {
+            .secondHand {
                 height: 200px;
                 width: 10px;
+                transform: rotate(0deg);
                 transform-origin: center 300%;
+                background-color: red;
             }
-            #frame {
-                height: 100%;
-                width: 100%;
+            .frame {
+                height: 100vh;
+                width: 100vw;
                 overflow: hidden;
+                display: flex;
+                flex-direction: column;
+  				align-items: center;
+  				justify-content: flex-start;
+                background-color: blue;
             }
-            #number {
-                margin: auto;
-                position: absolute;
-                size: auto;
-                font-size: large;
+            .number {
+                font-size: 100px;
+                text-align: center;
             }
 
         </style>
     </head>
     <body>
-        <div id="frame">
-            <div id="number">12</div>
-            <div id="secondHand"></div>
+        <div class="frame">
+            <div class="number">12</div>
+            <div class="secondHand"></div>
         </div>
     </body>
 </html>
