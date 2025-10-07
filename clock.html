@@ -103,7 +103,7 @@
             const hour = date.getHours() % 12; // 12 hour clock
         	secondHand.style.transform="rotate(" + 6 * second - angle + "deg)";
             minuteHand.style.transform="rotate(" + 6 * minute + 0.1 * second - angle + "deg)";
-            hourHand.style.transform="rotate(" + 30 * hour + 0.1 * minute + "deg)";
+            hourHand.style.transform="rotate(" + 30 * hour + 0.1 * minute - angle + "deg)";
         }
 
         function synchronize() {
