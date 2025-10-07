@@ -32,18 +32,21 @@
             <div id="number">12</div>
             <div id="secondHand"></div>
         </div>
+        <noscript>This website relies on Javascript to function.</noscript>
     </body>
     <script>
     	const secondHand = document.getElementById("secondHand");
+        const numberElement = document.getElementById("number");
         var hour;
         var minute;
         var second;
+        var number;
         function updateTime() {
         	const date = new Date();
             hour = date.getHours();
             minute = date.getMinutes();
             second = date.getSeconds();
-        	secondHand.style.transform="rotate(" + 6 * second + "deg)";
+        	secondHand.style.transform="rotate(" + 6 * second - 30 * number + "deg)";
         }
         function synchronize() {
         	const date = new Date();
@@ -53,6 +56,14 @@
                 setInterval(updateTime, 1000);
             }
         }
+        function handleOrientationChange(event) {
+            number = Math.round(event.target.angle / 12);
+            if (number < 1) {
+                number = 12;
+            }
+            numberElement.innerHTML = number;
+        }
+        screen.orientation.addEventListener("change", handleOrientationChange);
         synchronize();
     </script>
 </html>
