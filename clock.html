@@ -37,6 +37,7 @@
     <script>
         const numberElement = document.getElementById("number");
         const secondHand = document.getElementById("secondHand");
+        var angle;
         function startUp() {
             if (typeof DeviceOrientationEvent.requestPermission === "function") {
                 // Handle iOS 13+ devices.
@@ -56,11 +57,16 @@
         }
 
         function handleOrientationEvent(event) {
-            number = Math.round(event.alpha / 30);
-            if (number == 0) {
-                number = 12;
+            if (event.absolute === false){
+                angle = event.alpha;
+            } else {
+                if (event.beta > 45 && event.beta < 180) {
+                    angle = event.gamma; // if the device is upright, use gamma
+                } else {
+                    angle = event.alpha; // otherwise, alpha
+                }
             }
-            numberElement.innerHTML = number;
+            numberElement.innerHTML = Math.round(angle);
         }
     </script>
 </html>
