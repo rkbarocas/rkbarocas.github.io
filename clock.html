@@ -57,14 +57,9 @@
             }
         }
         function handleOrientationChange(event) {
-            number = Math.round(event.target.angle / 30);
-            event.preventDefault;
-            if (number < 1) {
-                number = 12;
-            }
-            numberElement.innerHTML = number;
+            numberElement.innerHTML = event.absolute + ";" + event.alpha + ";" + event.beta + ";" + event.gamma;
         }
-        screen.orientation.addEventListener("change", handleOrientationChange);
+        window.addEventListener("deviceorientation", handleOrientationChange);
         synchronize();
     </script>
 </html>
