@@ -98,7 +98,7 @@
             angle = Math.round(event.alpha); // assume using arbitrary position (seems to zero to first measurement on ios)
             const number = Math.round(angle / 30);
             if (number === 0) {number = 12;}
-            numberElement.innerHTML = number + "("+ angle +")";
+            numberElement.innerHTML = number + "("+ event.alpha +")";
         }
 
         function updateTime() {
@@ -106,9 +106,9 @@
             const second = date.getSeconds();
             const minute = date.getMinutes();
             const hour = date.getHours() % 12; // 12 hour clock
-        	secondHand.style.transform="rotate(" + 6 * second - angle + "deg)";
-            minuteHand.style.transform="rotate(" + 6 * minute + 0.5 * second - angle + "deg)"; // 0.5 = 360 / 12 / 60, i.e. scaled to one segment
-            hourHand.style.transform="rotate(" + 30 * hour + 0.5 * minute - angle + "deg)";
+        	secondHand.style.transform="rotate(" + (6 * second - angle) + "deg)";
+            minuteHand.style.transform="rotate(" + (6 * minute + 0.5 * second - angle) + "deg)"; // 0.5 = 360 / 12 / 60, i.e. scaled to one segment
+            hourHand.style.transform="rotate(" + (30 * hour + 0.5 * minute - angle) + "deg)";
         }
 
         function synchronize() {
