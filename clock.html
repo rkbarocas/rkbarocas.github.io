@@ -28,37 +28,39 @@
         </style>
     </head>
     <body>
-        <div class="frame">
-            <div id="number">12</div>
+        <div class="frame" onclick="startUp()">
+            <div id="number">Tap</div>
             <div id="secondHand"></div>
         </div>
         <noscript>This website relies on Javascript to function.</noscript>
     </body>
     <script>
-    	const secondHand = document.getElementById("secondHand");
         const numberElement = document.getElementById("number");
-        var hour;
-        var minute;
-        var second;
-        var number = 0;
-        function updateTime() {
-        	const date = new Date();
-            hour = date.getHours();
-            minute = date.getMinutes();
-            second = date.getSeconds();
-        	secondHand.style.transform="rotate(" + 6 * second - 30 * number + "deg)";
-        }
-        function synchronize() {
-        	const date = new Date();
-            if (date.getMilliseconds() > 10) {
-            	setTimeout(synchronize);
+        const secondHand = document.getElementById("secondHand");
+        function startUp() {
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {
+                // Handle iOS 13+ devices.
+                DeviceOrientationEvent.requestPermission()
+                .then((state) => {
+                    if (state === "granted") {
+                        window.addEventListener("deviceorientation", handleOrientationEvent);
+                    } else {
+                        console.error("Request to access the orientation was rejected");
+                    }
+                })
+                .catch(console.error);
             } else {
-                setInterval(updateTime, 1000);
+                // Handle regular non iOS 13+ devices.
+                window.addEventListener("deviceorientation", handleOrientationEvent);
             }
         }
-        window.addEventListener("deviceorientation", (event) => {
-            console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
-        });        
-        synchronize();
+
+        function handleOrientationEvent(event) {
+            number = Math.round(event.alpha / 30);
+            if (number == 0) {
+                number = 12;
+            }
+            numberElement.innerHTML = number;
+        }
     </script>
 </html>
