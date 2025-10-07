@@ -35,11 +35,25 @@
         <noscript>This website relies on Javascript to function.</noscript>
     </body>
     <script>
-        window.addEventListener("deviceorientation", (event) => {
-            console.log("Device orientation event fired!");
-            console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
-            document.getElementById("number").innerHTML = "IT CHANGED";
-        });
-        console.log("Hello world");   
+        console.log("Hello world");
+        if (window.DeviceOrientationEvent) {
+            window.addEventListener(
+                "deviceorientation",
+                (event) => {
+                const rotateDegrees = event.alpha; // alpha: rotation around z-axis
+                const leftToRight = event.gamma; // gamma: left to right
+                const frontToBack = event.beta; // beta: front back motion
+
+                handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
+                },
+                true,
+            );
+        } else {
+            console.log("No window.DeviceOrientationevent");
+        }
+
+        function handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
+            console.log("Handler fired! " + frontToBack + ", " + leftToRight + ", " + rotateDegrees);
+        }  
     </script>
 </html>
