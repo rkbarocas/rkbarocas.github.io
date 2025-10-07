@@ -35,31 +35,10 @@
         <noscript>This website relies on Javascript to function.</noscript>
     </body>
     <script>
-    	const secondHand = document.getElementById("secondHand");
-        const numberElement = document.getElementById("number");
-        var hour;
-        var minute;
-        var second;
-        var number = 0;
-        function updateTime() {
-        	const date = new Date();
-            hour = date.getHours();
-            minute = date.getMinutes();
-            second = date.getSeconds();
-        	secondHand.style.transform="rotate(" + 6 * second - 30 * number + "deg)";
-        }
-        function synchronize() {
-        	const date = new Date();
-            if (date.getMilliseconds() > 10) {
-            	setTimeout(synchronize);
-            } else {
-                setInterval(updateTime, 1000);
-            }
-        }
         window.addEventListener("deviceorientation", (event) => {
             console.log("Device orientation event fired!");
             console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
+            document.getElementById("number").innerHTML = "IT CHANGED";
         });        
-        synchronize();
     </script>
 </html>
