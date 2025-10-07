@@ -102,9 +102,9 @@
                 document.webkitexitFullscreen();
                 return;
             }
-            if (document.documentElement.requestFullscreen) {
+            if (typeof HTMLElement.requestFullscreen === "function") {
                 document.documentElement.requestFullscreen({ navigationUI: "hide" });
-            } else if (document.documentElement.webkitRequestFullscreen) { // safari
+            } else if (typeof HTMLElement.webkitRequestFullscreen === "function") { // safari
                 document.documentElement.webkitRequestFullscreen({ navigationUI: "hide" });
             }
         }
