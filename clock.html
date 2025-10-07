@@ -57,7 +57,8 @@
             }
         }
         function handleOrientationChange(event) {
-            number = Math.round(event.target.angle / 12);
+            number = Math.round(event.target.angle / 30);
+            event.preventDefault;
             if (number < 1) {
                 number = 12;
             }
