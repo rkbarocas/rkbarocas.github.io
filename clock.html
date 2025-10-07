@@ -38,20 +38,20 @@
         console.log("Hello world");
         const numberElement = document.getElementById("number");
         function startUp() {
-            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+            if (typeof DeviceOrientationEvent.requestPermission === "function") {
                 // Handle iOS 13+ devices.
-                DeviceMotionEvent.requestPermission()
+                DeviceOrientationEvent.requestPermission()
                 .then((state) => {
-                    if (state === 'granted') {
-                        window.addEventListener('devicemotion', handleOrientationEvent);
+                    if (state === "granted") {
+                        window.addEventListener("deviceorientation", handleOrientationEvent);
                     } else {
-                        console.error('Request to access the orientation was rejected');
+                        console.error("Request to access the orientation was rejected");
                     }
                 })
                 .catch(console.error);
             } else {
                 // Handle regular non iOS 13+ devices.
-                window.addEventListener('devicemotion', handleOrientationEvent);
+                window.addEventListener("deviceorientation", handleOrientationEvent);
             }
         }
 
