@@ -36,6 +36,7 @@
     </body>
     <script>
         console.log("Hello world");
+        const numberElement = document.getElementById("number");
         function startUp() {
             if (typeof DeviceMotionEvent.requestPermission === 'function') {
                 // Handle iOS 13+ devices.
@@ -52,11 +53,10 @@
                 // Handle regular non iOS 13+ devices.
                 window.addEventListener('devicemotion', handleOrientationEvent);
             }
-            document.getElementById("frame").innerHTML = 12;
         }
 
-        function handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
-            console.log("Handler fired! " + frontToBack + ", " + leftToRight + ", " + rotateDegrees);
-        }  
+        function handleOrientationEvent(event) {
+            numberElement.innerHTML = event.alpha;
+        }
     </script>
 </html>
