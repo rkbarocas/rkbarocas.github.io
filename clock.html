@@ -50,7 +50,7 @@
                 background-color: wheat;
             }
             #number {
-                font-size: 100px;
+                font-size: 80px;
                 text-align: center;
             }
 
@@ -58,7 +58,7 @@
     </head>
     <body>
         <div id="frame" onclick="startUp()/*; this.onclick=toggleFullscreen()*/">
-            <div id="number">Tap once oriented</div>
+            <div id="number">Tap once oriented to 12</div>
             <div id="hourHand"></div>
             <div id="minuteHand"></div>
             <div id="secondHand"></div>            
@@ -88,6 +88,7 @@
                 // Handle regular non iOS 13+ devices.
                 window.addEventListener("deviceorientation", handleOrientationEvent);
             }
+            numberElement.style.fontSize = "200px";
             numberElement.innerHTML = number;
             updateTime();
             secondHand.style.display = "block";
