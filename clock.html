@@ -29,7 +29,7 @@
     </head>
     <body>
         <div class="frame" onclick="startUp()">
-            <div id="number">Tap</div>
+            <div id="number">Position your device, then tap</div>
             <div id="secondHand"></div>
         </div>
         <noscript>This website relies on Javascript to function.</noscript>
@@ -57,16 +57,8 @@
         }
 
         function handleOrientationEvent(event) {
-            if (event.absolute === false){
-                angle = event.alpha;
-            } else {
-                if (event.beta > 45 && event.beta < 180) {
-                    angle = event.gamma; // if the device is upright, use gamma
-                } else {
-                    angle = event.alpha; // otherwise, alpha
-                }
-            }
-            numberElement.innerHTML = Math.round(angle);
+            angle = event.alpha; // assume using arbitrary position (seems to zero on first measurement)
+            numberElement.innerHTML = Math.round(Math.abs(angle - 360) / 30);
         }
     </script>
 </html>
