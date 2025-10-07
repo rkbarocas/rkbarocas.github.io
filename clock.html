@@ -59,9 +59,9 @@
     <body>
         <div id="frame" onclick="startUp(); this.onclick=null">
             <div id="number">Tap once oriented</div>
-            <div id="secondHand"></div>
-            <div id="minuteHand"></div>
             <div id="hourHand"></div>
+            <div id="minuteHand"></div>
+            <div id="secondHand"></div>            
         </div>
         <noscript>This website relies on Javascript to function.</noscript>
     </body>
@@ -94,8 +94,10 @@
         }
 
         function handleOrientationEvent(event) {
-            angle = Math.round(Math.abs(angle - 360)); // assume using arbitrary position (seems to zero to first measurement on ios)
-            numberElement.innerHTML = Math.round(angle / 30);
+            angle = Math.round(Math.abs(event.alpha - 360)); // assume using arbitrary position (seems to zero to first measurement on ios)
+            const number = Math.round(angle / 30);
+            if (number === 0) {number = 12;}
+            numberElement.innerHTML = number;
         }
 
         function updateTime() {
@@ -104,8 +106,8 @@
             const minute = date.getMinutes();
             const hour = date.getHours() % 12; // 12 hour clock
         	secondHand.style.transform="rotate(" + 6 * second - angle + "deg)";
-            minuteHand.style.transform="rotate(" + 6 * minute + 0.1 * second - angle + "deg)";
-            hourHand.style.transform="rotate(" + 30 * hour + 0.1 * minute - angle + "deg)";
+            minuteHand.style.transform="rotate(" + 6 * minute + 0.5 * second - angle + "deg)"; // 0.5 = 360 / 12 / 60, i.e. scaled to one segment
+            hourHand.style.transform="rotate(" + 30 * hour + 0.5 * minute - angle + "deg)";
         }
 
         function synchronize() {
