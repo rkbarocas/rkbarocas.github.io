@@ -28,28 +28,31 @@
         </style>
     </head>
     <body>
-        <div class="frame">
-            <div id="number">12</div>
+        <div class="frame" onclick="startUp()">
+            <div id="number">Tap</div>
             <div id="secondHand"></div>
         </div>
         <noscript>This website relies on Javascript to function.</noscript>
     </body>
     <script>
         console.log("Hello world");
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener(
-                "deviceorientation",
-                (event) => {
-                const rotateDegrees = event.alpha; // alpha: rotation around z-axis
-                const leftToRight = event.gamma; // gamma: left to right
-                const frontToBack = event.beta; // beta: front back motion
-
-                handleOrientationEvent(frontToBack, leftToRight, rotateDegrees);
-                },
-                true,
-            );
-        } else {
-            console.log("No window.DeviceOrientationevent");
+        function startUp() {
+            if (typeof DeviceMotionEvent.requestPermission === 'function') {
+                // Handle iOS 13+ devices.
+                DeviceMotionEvent.requestPermission()
+                .then((state) => {
+                    if (state === 'granted') {
+                        window.addEventListener('devicemotion', handleOrientationEvent);
+                    } else {
+                        console.error('Request to access the orientation was rejected');
+                    }
+                })
+                .catch(console.error);
+            } else {
+                // Handle regular non iOS 13+ devices.
+                window.addEventListener('devicemotion', handleOrientationEvent);
+            }
+            document.getElementById("frame").innerHTML = 12;
         }
 
         function handleOrientationEvent(frontToBack, leftToRight, rotateDegrees) {
