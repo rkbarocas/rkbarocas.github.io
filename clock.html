@@ -95,10 +95,10 @@
         }
 
         function handleOrientationEvent(event) {
-            angle = Math.round(event.alpha); // assume using arbitrary position (seems to zero to first measurement on ios)
-            const number = Math.round(angle / 30);
+            angle = Math.round(Math.abs(event.alpha)); // assume using arbitrary position (seems to zero to first measurement on ios)
+            var number = Math.round(angle / 30);
             if (number === 0) {number = 12;}
-            numberElement.innerHTML = number + "("+ event.alpha +")";
+            numberElement.innerHTML = number;
         }
 
         function updateTime() {
