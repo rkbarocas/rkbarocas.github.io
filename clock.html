@@ -99,12 +99,13 @@
         function toggleFullscreen(){
             if (document.fullscreenElement) {
                 document.exitFullscreen();
+                document.webkitexitFullscreen();
                 return;
             }
-            if (frameElement.requestFullscreen) {
-                frameElement.requestFullscreen();
-            } else if (frameElement.webkitRequestFullscreen) { // safari
-                frameElement.webkitRequestFullscreen();
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen({ navigationUI: "hide" });
+            } else if (document.documentElement.webkitRequestFullscreen) { // safari
+                document.documentElement.webkitRequestFullscreen({ navigationUI: "hide" });
             }
         }
 
