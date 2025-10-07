@@ -57,6 +57,7 @@
             }
         }
         window.addEventListener("deviceorientation", (event) => {
+            console.log("Device orientation event fired!");
             console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
         });        
         synchronize();
