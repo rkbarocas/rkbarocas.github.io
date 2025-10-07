@@ -4,7 +4,7 @@
         <title>Cooperative Clock</title>
         <style>
             #secondHand {
-                height: 200px;
+                height: 50%;
                 width: 10px;
                 transform: rotate(0deg);
                 transform-origin: center 300%;
@@ -20,7 +20,7 @@
   				justify-content: flex-start;
                 background-color: blue;
             }
-            .number {
+            #number {
                 font-size: 100px;
                 text-align: center;
             }
@@ -29,17 +29,30 @@
     </head>
     <body>
         <div class="frame">
-            <div class="number">12</div>
+            <div id="number">12</div>
             <div id="secondHand"></div>
         </div>
     </body>
     <script>
     	const secondHand = document.getElementById("secondHand");
-        var rotate = 0;
-    	function rotateSecond() {
-        	secondHand.style.transform="rotate(" + rotate + "deg)";
-            rotate = (rotate + 6) % 360;
+        var hour;
+        var minute;
+        var second;
+        function updateTime() {
+        	const date = new Date();
+            hour = date.getHours();
+            minute = date.getMinutes();
+            second = date.getSeconds();
+        	secondHand.style.transform="rotate(" + 6 * second + "deg)";
         }
-        setInterval(rotateSecond, 1000);
+        function synchronize() {
+        	const date = new Date();
+            if (date.getMilliseconds() > 10) {
+            	setTimeout(synchronize);
+            } else {
+                setInterval(updateTime, 1000);
+            }
+        }
+        synchronize();
     </script>
 </html>
