@@ -57,7 +57,7 @@
         </style>
     </head>
     <body>
-        <div id="frame" onclick="startUp(); this.onclick=null">
+        <div id="frame" onclick="startUp(); this.onclick=toggleFullscreen()">
             <div id="number">Tap once oriented</div>
             <div id="hourHand"></div>
             <div id="minuteHand"></div>
@@ -70,6 +70,7 @@
         const secondHand = document.getElementById("secondHand");
         const minuteHand = document.getElementById("minuteHand");
         const hourHand = document.getElementById("hourHand");
+        const frameElement = document.getElementById("frame");
         var number = 12;
         function startUp() {
             if (typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -91,7 +92,20 @@
             secondHand.style.display = "block";
             minuteHand.style.display = "block";
             hourHand.style.display = "block";
+            toggleFullscreen();
             synchronize();
+        }
+
+        function toggleFullscreen(){
+            if (document.fullscreenElement) {
+                document.exitFullscreen();
+                return;
+            }
+            if (frameElement.requestFullscreen) {
+                frameElement.requestFullscreen();
+            } else if (frameElement.webkitRequestFullscreen) { // safari
+                frameElement.webkitRequestFullscreen();
+            }
         }
 
         function handleOrientationEvent(event) {
