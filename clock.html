@@ -4,21 +4,50 @@
         <title>Cooperative Clock</title>
         <style>
             #secondHand {
+                position: absolute;
                 height: 50%;
                 width: 10px;
+                top: 50%; /* center top left on parent */
+                left: 50%;
+                margin-top: -25%;
+                margin-left: -5px; /* adjust by half */
                 transform: rotate(0deg);
                 transform-origin: center 300%;
-                background-color: red;
+                background-color: black;
+                display: none;
             }
-            .frame {
+            #minuteHand {
+                position: absolute;
+                height: 50%;
+                width: 20px;
+                top: 50%; /* center top left on parent */
+                left: 50%;
+                margin-top: -25%;
+                margin-left: -10px; /* adjust by half */
+                transform: rotate(0deg);
+                transform-origin: center 300%;
+                background-color: grey;
+                display: none;
+            }
+            #hourHand {
+                position: absolute;
+                height: 50%;
+                width: 30px;
+                top: 50%; /* center top left on parent */
+                left: 50%;
+                margin-top: -25%;
+                margin-left: -15px; /* adjust by half */
+                transform: rotate(0deg);
+                transform-origin: center 300%;
+                background-color: darkgrey; /* light than grey?? */
+                display: none;
+            }
+            #frame {
+                position: absolute;
                 height: 100vh;
                 width: 100vw;
                 overflow: hidden;
-                display: flex;
-                flex-direction: column;
-  				align-items: center;
-  				justify-content: flex-start;
-                background-color: blue;
+                background-color: wheat;
             }
             #number {
                 font-size: 100px;
@@ -28,8 +57,8 @@
         </style>
     </head>
     <body>
-        <div class="frame" onclick="startUp()">
-            <div id="number">Position your device, then tap</div>
+        <div id="frame" onclick="startUp(); this.onclick=null">
+            <div id="number">Tap once oriented</div>
             <div id="secondHand"></div>
         </div>
         <noscript>This website relies on Javascript to function.</noscript>
@@ -37,6 +66,8 @@
     <script>
         const numberElement = document.getElementById("number");
         const secondHand = document.getElementById("secondHand");
+        const minuteHand = document.getElementById("minuteHand");
+        const hourHand = document.getElementById("hourHand");
         var angle;
         function startUp() {
             if (typeof DeviceOrientationEvent.requestPermission === "function") {
@@ -54,11 +85,35 @@
                 // Handle regular non iOS 13+ devices.
                 window.addEventListener("deviceorientation", handleOrientationEvent);
             }
+            updateTime();
+            secondHand.style.display = "block";
+            minuteHand.style.display = "block";
+            hourHand.style.display = "block";
         }
 
         function handleOrientationEvent(event) {
-            angle = event.alpha; // assume using arbitrary position (seems to zero on first measurement)
-            numberElement.innerHTML = Math.round(Math.abs(angle - 360) / 30);
+            angle = Math.round(Math.abs(angle - 360)); // assume using arbitrary position (seems to zero to first measurement on ios)
+            numberElement.innerHTML = Math.round(angle / 30);
         }
+
+        function updateTime() {
+        	const date = new Date();
+            const second = date.getSeconds();
+            const minute = date.getMinutes();
+            const hour = date.getHours() % 12; // 12 hour clock
+        	secondHand.style.transform="rotate(" + 6 * second - angle + "deg)";
+            minuteHand.style.transform="rotate(" + 6 * minute + 0.1 * second - angle + "deg)";
+            hourHand.style.transform="rotate(" + 30 * hour + 0.1 * minute + "deg)";
+        }
+
+        function synchronize() {
+        	const date = new Date();
+            if (date.getMilliseconds() > 10) {
+            	setTimeout(synchronize);
+            } else {
+                setInterval(updateTime, 1000);
+            }
+        }
+        synchronize();
     </script>
 </html>
