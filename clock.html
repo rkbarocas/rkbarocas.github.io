@@ -70,7 +70,7 @@
         const secondHand = document.getElementById("secondHand");
         const minuteHand = document.getElementById("minuteHand");
         const hourHand = document.getElementById("hourHand");
-        var angle;
+        var angle = 0;
         function startUp() {
             if (typeof DeviceOrientationEvent.requestPermission === "function") {
                 // Handle iOS 13+ devices.
@@ -91,13 +91,14 @@
             secondHand.style.display = "block";
             minuteHand.style.display = "block";
             hourHand.style.display = "block";
+            synchronize();
         }
 
         function handleOrientationEvent(event) {
             angle = Math.round(Math.abs(event.alpha - 360)); // assume using arbitrary position (seems to zero to first measurement on ios)
             const number = Math.round(angle / 30);
             if (number === 0) {number = 12;}
-            numberElement.innerHTML = number;
+            numberElement.innerHTML = number + "("+ angle +")";
         }
 
         function updateTime() {
@@ -118,6 +119,5 @@
                 setInterval(updateTime, 1000);
             }
         }
-        synchronize();
     </script>
 </html>
