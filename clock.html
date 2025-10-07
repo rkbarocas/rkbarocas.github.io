@@ -57,7 +57,7 @@
         </style>
     </head>
     <body>
-        <div id="frame" onclick="startUp(); this.onclick=toggleFullscreen()">
+        <div id="frame" onclick="startUp()/*; this.onclick=toggleFullscreen()*/">
             <div id="number">Tap once oriented</div>
             <div id="hourHand"></div>
             <div id="minuteHand"></div>
@@ -88,15 +88,16 @@
                 // Handle regular non iOS 13+ devices.
                 window.addEventListener("deviceorientation", handleOrientationEvent);
             }
+            numberElement.innerHTML = number;
             updateTime();
             secondHand.style.display = "block";
             minuteHand.style.display = "block";
             hourHand.style.display = "block";
-            toggleFullscreen();
+            // toggleFullscreen();
             synchronize();
         }
 
-        function toggleFullscreen(){
+        /*function toggleFullscreen(){
             if (document.fullscreenElement) {
                 document.exitFullscreen();
                 document.webkitexitFullscreen();
@@ -107,7 +108,7 @@
             } else if (typeof HTMLElement.webkitRequestFullscreen === "function") { // safari
                 document.documentElement.webkitRequestFullscreen({ navigationUI: "hide" });
             }
-        }
+        }*/
 
         function handleOrientationEvent(event) {
             const oldNumber = number;
