@@ -40,7 +40,7 @@
         var hour;
         var minute;
         var second;
-        var number;
+        var number = 0;
         function updateTime() {
         	const date = new Date();
             hour = date.getHours();
@@ -56,10 +56,9 @@
                 setInterval(updateTime, 1000);
             }
         }
-        function handleOrientationChange(event) {
-            numberElement.innerHTML = event.absolute + ";" + event.alpha + ";" + event.beta + ";" + event.gamma;
-        }
-        window.addEventListener("deviceorientation", handleOrientationChange);
+        window.addEventListener("deviceorientation", (event) => {
+            console.log(`${event.alpha} : ${event.beta} : ${event.gamma}`);
+        });        
         synchronize();
     </script>
 </html>
