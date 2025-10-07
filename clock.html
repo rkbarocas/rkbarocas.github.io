@@ -95,7 +95,7 @@
         }
 
         function handleOrientationEvent(event) {
-            angle = Math.round(Math.abs(event.alpha - 360)); // assume using arbitrary position (seems to zero to first measurement on ios)
+            angle = Math.round(event.alpha); // assume using arbitrary position (seems to zero to first measurement on ios)
             const number = Math.round(angle / 30);
             if (number === 0) {number = 12;}
             numberElement.innerHTML = number + "("+ angle +")";
