@@ -57,8 +57,8 @@
         </style>
     </head>
     <body>
-        <div id="frame" onclick="startUp()/*; this.onclick=toggleFullscreen()*/">
-            <div id="number">Tap once oriented to 12</div>
+        <div id="frame" onclick="startUp(); this.onclick=null/*toggleFullscreen*/">
+            <div id="number">Align, then tap to start</div>
             <div id="hourHand"></div>
             <div id="minuteHand"></div>
             <div id="secondHand"></div>            
@@ -94,6 +94,7 @@
             secondHand.style.display = "block";
             minuteHand.style.display = "block";
             hourHand.style.display = "block";
+            wakeLockScreen();
             // toggleFullscreen();
             synchronize();
         }
@@ -130,6 +131,14 @@
         	secondHand.style.transform="rotate(" + (6 * second - 30 * number) + "deg)";
             minuteHand.style.transform="rotate(" + (6 * minute + 0.1 * second - 30 * number) + "deg)"; // 0.1 = 360 / 60 / 60, i.e. scaled to one minute
             hourHand.style.transform="rotate(" + (30 * hour + 0.5 * minute - 30 * number) + "deg)"; // 0.5 = 360 / 12 / 60, i.e. scaled to one hour
+        }
+
+        async function wakeLockScreen(){
+            try {
+                const wakeLock = await navigator.wakeLock.request("screen");
+            } catch (err) {
+                console.log("Wake lock failed: ${err.name}, ${err.message}");
+            }
         }
 
         function synchronize() {
